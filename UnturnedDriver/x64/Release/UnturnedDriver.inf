@@ -1,0 +1,90 @@
+;
+; UnturnedDriver.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=Sample ; TODO: edit Class
+ClassGuid={78A1C341-4539-11d3-B88D-00C04FAD5171} ; TODO: edit ClassGuid
+Provider=%ManufacturerName%
+CatalogFile=UnturnedDriver.cat
+DriverVer = 06/27/2021,10.41.20.712
+PnpLockDown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+UnturnedDriver_Device_CoInstaller_CopyFiles = 11
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=SampleClassReg
+
+[SampleClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+UnturnedDriver.sys  = 1,,
+;
+
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%UnturnedDriver.DeviceDesc%=UnturnedDriver_Device, Root\UnturnedDriver ; TODO: edit hw-id
+
+[UnturnedDriver_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+UnturnedDriver.sys
+
+;-------------- Service installation
+[UnturnedDriver_Device.NT.Services]
+AddService = UnturnedDriver,%SPSVCINST_ASSOCSERVICE%, UnturnedDriver_Service_Inst
+
+; -------------- UnturnedDriver driver install sections
+[UnturnedDriver_Service_Inst]
+DisplayName    = %UnturnedDriver.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\UnturnedDriver.sys
+
+;
+;--- UnturnedDriver_Device Coinstaller installation ------
+;
+
+[UnturnedDriver_Device.NT.CoInstallers]
+AddReg=UnturnedDriver_Device_CoInstaller_AddReg
+CopyFiles=UnturnedDriver_Device_CoInstaller_CopyFiles
+
+[UnturnedDriver_Device_CoInstaller_AddReg]
+;
+
+
+[UnturnedDriver_Device_CoInstaller_CopyFiles]
+;
+
+
+[UnturnedDriver_Device.NT.Wdf]
+KmdfService =  UnturnedDriver, UnturnedDriver_wdfsect
+[UnturnedDriver_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+ClassName="Samples" ; TODO: edit ClassName
+DiskName = "UnturnedDriver Installation Disk"
+UnturnedDriver.DeviceDesc = "UnturnedDriver Device"
+UnturnedDriver.SVCDESC = "UnturnedDriver Service"

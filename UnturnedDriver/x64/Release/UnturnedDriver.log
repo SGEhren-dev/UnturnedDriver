@@ -1,0 +1,11 @@
+﻿  Building 'UnturnedDriver' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  Stamping x64\Release\UnturnedDriver.inf
+  Stamping [Version] section with DriverVer=06/27/2021,10.41.20.712
+  hook.cpp
+M:\Game Hacking\Unturned\UnturnedDriver\UnturnedDriver\hook.cpp(30,39): warning C4100: 'called_param': unreferenced formal parameter
+  main.cpp
+  memory.cpp
+M:\Game Hacking\Unturned\UnturnedDriver\UnturnedDriver\memory.cpp(65,60): warning C4267: 'argument': conversion from 'size_t' to 'ULONG', possible loss of data
+  Generating Code...
+  UnturnedDriver.vcxproj -> M:\Game Hacking\Unturned\UnturnedDriver\x64\Release\UnturnedDriver.sys
+  Driver is 'Universal'.
